@@ -16,15 +16,22 @@ let resetBtn = document.getElementById('resetBtn');
 let lives;
 let word;
 let testing;
+let completeLength;
+let toComplete;
+let completed;
 startBtn.addEventListener('click', getWord);
 resetBtn.addEventListener('click', () => { location.reload(); });
 function getWord() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield fetch('https://random-word-api.herokuapp.com/word')
+        // await fetch('https://random-word-api.herokuapp.com/word')  hard words
+        yield fetch('https://random-word-api.vercel.app/api?words=1')
             .then((response) => response.json())
-            .then((response) => (word = response.toString().split('')));
+            .then((response) => (word = response.toString().toUpperCase().split('')));
         startBtn.disabled = true;
-        lives = 0;
+        lives = 7;
+        toComplete = 0;
+        completed = 0;
+        completeLength = word.length;
         populateWord();
         populateBoard();
     });
@@ -33,9 +40,9 @@ function populateWord() {
     word.forEach(function (e) {
         let letter = document.createElement('span');
         letter.innerHTML = '_';
-        letter.id = e;
         secretWord.append(letter);
     });
+    testing = document.querySelectorAll('span');
 }
 function populateBoard() {
     let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -44,10 +51,35 @@ function populateBoard() {
         button.innerHTML = e.toUpperCase();
         guessBoard.append(button);
         button.addEventListener('click', checkLetter);
-        testing = document.querySelectorAll('span'); //New stuff in test
     });
 }
 function checkLetter(e) {
+    e.target.disabled = true;
+    completed = toComplete;
     let check = e.target.innerHTML;
-    console.log(check);
+    for (let i = 0; i < word.length; i++) {
+        if (check === word[i]) {
+            testing[i].textContent = check;
+            toComplete++;
+            if (toComplete === completeLength) {
+                guessBoard.style.display = 'none';
+                setTimeout(youWin, 500);
+            }
+        }
+    }
+    if (completed === toComplete) {
+        lives--;
+        hangmanImage.src = `./Images/Hangman${lives}.jpg`;
+        if (lives === 0) {
+            guessBoard.style.display = 'none';
+            setTimeout(youLose, 500);
+        }
+    }
+}
+function youWin() {
+    alert('Congratulations, YOU WIN!');
+}
+function youLose() {
+    alert('You lose, better luck next time!');
+    alert(`You're word was ${word.join('')}!`);
 }
