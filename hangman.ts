@@ -98,4 +98,5 @@ function youLose(): void {
 }
 
 // TODO  Make function to show word with colors different for the letters its showing you
+// TODO  Use Color Theme Inverse for loss and selected items
 
