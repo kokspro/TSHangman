@@ -3,6 +3,7 @@ let secretWord = document.getElementById('secretWord') as HTMLDivElement;
 let guessBoard = document.getElementById('guessBoard') as HTMLDivElement;
 let startBtn = document.getElementById('startBtn') as HTMLButtonElement;
 let resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
+let mode = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
 
 let lives: number;
 let word: string[];
@@ -16,11 +17,18 @@ resetBtn.addEventListener('click', () => { location.reload() });
 
 
 async function getWord(): Promise<void> {
-    // await fetch('https://random-word-api.herokuapp.com/word')  hard words
-    await fetch('https://random-word-api.vercel.app/api?words=1')
-    .then((response) => response.json())
-    .then((response) => ( word = response.toString().toUpperCase().split('') ));
-    startBtn.disabled = true;
+    if (mode[0].checked) {
+        await fetch('https://random-word-api.herokuapp.com/word')
+        .then((response) => response.json())
+        .then((response) => ( word = response.toString().toUpperCase().split('') ));
+    } else if (mode[1].checked) {
+        await fetch('https://random-word-api.vercel.app/api?words=1')
+        .then((response) => response.json())
+        .then((response) => ( word = response.toString().toUpperCase().split('') ));
+    }
+    mode.forEach( function(radio: HTMLInputElement) {
+        radio.disabled = true;
+    });
     lives = 7;
     toComplete = 0;
     completed = 0;
@@ -29,7 +37,7 @@ async function getWord(): Promise<void> {
     populateBoard();
 }
 
- function populateWord(): void { 
+function populateWord(): void { 
     word.forEach( function (e: string) {
         let letter: HTMLSpanElement = document.createElement('span');
         letter.innerHTML = '_';

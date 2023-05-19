@@ -10,8 +10,17 @@
 </head>
 <body>
     <header>Hangman!</header>
-    <button id="startBtn">Start</button>
-    <button id="resetBtn">Reset</button>
+    <div>
+        <input type="radio" id="easyMode" name="difficulty" value="easy" checked>
+        <label for="easyMode">Easy</label>
+        <input type="radio" id="hardMode" name="difficulty" value="hard">
+        <label for="hardMode">Hard</label>
+    </div>
+    <div>
+        <button id="startBtn">Start</button>
+        <button id="resetBtn">Reset</button>
+    </div>
+
     <div>
         <img id="hangmanImage" src="./Images/Hangman7.jpg" alt="">
     </div>
