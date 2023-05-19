@@ -34,9 +34,7 @@ function getWord() {
                 .then((response) => response.json())
                 .then((response) => (word = response.toString().toUpperCase().split('')));
         }
-        mode.forEach(function (radio) {
-            radio.disabled = true;
-        });
+        disableMode();
         lives = 7;
         toComplete = 0;
         completed = 0;
@@ -44,6 +42,13 @@ function getWord() {
         populateWord();
         populateBoard();
     });
+}
+function disableMode() {
+    mode.forEach(function (radio) {
+        radio.disabled = true;
+    });
+    startBtn.disabled = true;
+    resetBtn.disabled = true;
 }
 function populateWord() {
     word.forEach(function (e) {
@@ -87,8 +92,10 @@ function checkLetter(e) {
 }
 function youWin() {
     alert('Congratulations, YOU WIN!');
+    resetBtn.disabled = false;
 }
 function youLose() {
     alert('You lose, better luck next time!');
     alert(`You're word was ${word.join('')}!`);
+    resetBtn.disabled = false;
 }

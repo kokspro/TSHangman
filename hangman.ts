@@ -26,15 +26,22 @@ async function getWord(): Promise<void> {
         .then((response) => response.json())
         .then((response) => ( word = response.toString().toUpperCase().split('') ));
     }
-    mode.forEach( function(radio: HTMLInputElement) {
-        radio.disabled = true;
-    });
+
+    disableMode();
     lives = 7;
     toComplete = 0;
     completed = 0;
     completeLength = word.length;
     populateWord();
     populateBoard();
+}
+
+function disableMode(): void {
+    mode.forEach( function(radio: HTMLInputElement) {
+        radio.disabled = true;
+    });
+    startBtn.disabled = true;
+    resetBtn.disabled = true;
 }
 
 function populateWord(): void { 
@@ -79,12 +86,16 @@ function checkLetter(e: any): void {
         }
     }
 }
-function youWin() {
+function youWin(): void {
     alert('Congratulations, YOU WIN!');
+    resetBtn.disabled = false;
 }
 
-function youLose() {
+function youLose(): void {
     alert('You lose, better luck next time!');
     alert(`You're word was ${word.join('')}!`);
-
+    resetBtn.disabled = false;
 }
+
+// TODO  Make function to show word with colors different for the letters its showing you
+
