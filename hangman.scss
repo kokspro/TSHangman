@@ -1,10 +1,77 @@
-span {
-    margin: 1rem;
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: grid;
+    gap: 1rem;
+    text-align: center;
+    background: darken(#555555, 10%);
+    color: #E55803;
+}
+
+h1 {
     font-size: 4rem;
+    margin: 2.5rem 0 1.5rem;
+}
+
+label {
+    padding: 0.5rem;
+    border: 3px solid #E55803;
+    margin: 1.8rem;
+    background-color: #555555;
+    border-radius: 1rem;
+}
+
+button {
+    padding: 0.5rem;
+    border: 3px solid #E55803;
+    border-radius: 2rem;
+    background: #555555;
+    color: #E55803;
+    width: 5rem;
+    margin: 1rem;
+}
+
+span {
+    margin: 0.5rem;
+    font-size: 2rem;
+}
+
+.gameButtons button{
+    &:disabled {
+        opacity: 0.3;
+    }
+}
+
+.difficulty input {
+    display: none;
+      
+    &:checked+label{
+        background: black;
+        color: #1aa7fc;
+        border-color: #1aa7fc;
+    }
+    
+    &:disabled+label {
+        opacity: 0.3;
+    }
+}
+
+#guessBoard {
+    margin: 1rem;
 }
 
 #secretWord {
-    margin-bottom: 1rem;
-    margin-top: -5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.selected {
+    background: black;
+    color: #1aa7fc;
+    border-color: #1aa7fc;
 }
 

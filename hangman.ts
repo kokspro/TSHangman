@@ -12,11 +12,13 @@ let completeLength: number;
 let toComplete: number;
 let completed: number;
 
-startBtn.addEventListener('click', getWord);
+startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload() });
 
 
 async function getWord(): Promise<void> {
+
+
     if (mode[0].checked) {
         await fetch('https://random-word-api.herokuapp.com/word')
         .then((response) => response.json())
@@ -27,7 +29,6 @@ async function getWord(): Promise<void> {
         .then((response) => ( word = response.toString().toUpperCase().split('') ));
     }
 
-    disableMode();
     lives = 7;
     toComplete = 0;
     completed = 0;
@@ -42,6 +43,7 @@ function disableMode(): void {
     });
     startBtn.disabled = true;
     resetBtn.disabled = true;
+    getWord();
 }
 
 function populateWord(): void { 
@@ -65,6 +67,7 @@ function populateBoard(): void {
 
 function checkLetter(e: any): void {
     e.target.disabled = true;
+    e.target.classList.add('selected');
     completed = toComplete;
     let check: string = e.target.innerHTML;
     for (let i = 0; i < word.length; i++) {

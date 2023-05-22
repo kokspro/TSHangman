@@ -20,7 +20,7 @@ let testing;
 let completeLength;
 let toComplete;
 let completed;
-startBtn.addEventListener('click', getWord);
+startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload(); });
 function getWord() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -34,7 +34,6 @@ function getWord() {
                 .then((response) => response.json())
                 .then((response) => (word = response.toString().toUpperCase().split('')));
         }
-        disableMode();
         lives = 7;
         toComplete = 0;
         completed = 0;
@@ -49,6 +48,7 @@ function disableMode() {
     });
     startBtn.disabled = true;
     resetBtn.disabled = true;
+    getWord();
 }
 function populateWord() {
     word.forEach(function (e) {
@@ -69,6 +69,7 @@ function populateBoard() {
 }
 function checkLetter(e) {
     e.target.disabled = true;
+    e.target.classList.add('selected');
     completed = toComplete;
     let check = e.target.innerHTML;
     for (let i = 0; i < word.length; i++) {
@@ -99,3 +100,5 @@ function youLose() {
     alert(`You're word was ${word.join('')}!`);
     resetBtn.disabled = false;
 }
+// TODO  Make function to show word with colors different for the letters its showing you
+// TODO  Use Color Theme Inverse for loss and selected items

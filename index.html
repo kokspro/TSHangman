@@ -9,14 +9,14 @@
     <script defer src="hangman.js"></script>
 </head>
 <body>
-    <header>Hangman!</header>
-    <div>
-        <input type="radio" id="easyMode" name="difficulty" value="easy" checked>
+    <h1>Hangman!</h1>
+    <div class="difficulty">
+        <input type="radio" id="easyMode" name="difficulty" value="easyMode" checked>
         <label for="easyMode">Easy</label>
-        <input type="radio" id="hardMode" name="difficulty" value="hard">
+        <input type="radio" id="hardMode" name="difficulty" value="hardMode">
         <label for="hardMode">Hard</label>
     </div>
-    <div>
+    <div class="gameButtons">
         <button id="startBtn">Start</button>
         <button id="resetBtn">Reset</button>
     </div>
