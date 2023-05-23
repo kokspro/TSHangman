@@ -17,8 +17,6 @@ resetBtn.addEventListener('click', () => { location.reload() });
 
 
 async function getWord(): Promise<void> {
-
-
     if (mode[0].checked) {
         await fetch('https://random-word-api.herokuapp.com/word')
         .then((response) => response.json())
@@ -42,7 +40,7 @@ function disableMode(): void {
         radio.disabled = true;
     });
     startBtn.disabled = true;
-    resetBtn.disabled = true;
+    // resetBtn.disabled = true;
     getWord();
 }
 
@@ -50,6 +48,11 @@ function populateWord(): void {
     word.forEach( function (e: string) {
         let letter: HTMLSpanElement = document.createElement('span');
         letter.innerHTML = '_';
+        if (word.length <= 6) {
+            letter.style.fontSize = `calc((100vw / ${word.length}) / 1.5)`;
+        } else {
+            letter.style.fontSize = `calc(100vw / ${word.length})`;
+        }
         secretWord.append(letter);
     });
     testing = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;
@@ -91,13 +94,13 @@ function checkLetter(e: any): void {
 }
 function youWin(): void {
     alert('Congratulations, YOU WIN!');
-    resetBtn.disabled = false;
+    // resetBtn.disabled = false;
 }
 
 function youLose(): void {
     alert('You lose, better luck next time!');
     alert(`You're word was ${word.join('')}!`);
-    resetBtn.disabled = false;
+    // resetBtn.disabled = false;
 }
 
 // TODO  Make function to show word with colors different for the letters its showing you

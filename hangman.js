@@ -47,13 +47,19 @@ function disableMode() {
         radio.disabled = true;
     });
     startBtn.disabled = true;
-    resetBtn.disabled = true;
+    // resetBtn.disabled = true;
     getWord();
 }
 function populateWord() {
     word.forEach(function (e) {
         let letter = document.createElement('span');
         letter.innerHTML = '_';
+        if (word.length <= 6) {
+            letter.style.fontSize = `calc((100vw / ${word.length}) / 1.5)`;
+        }
+        else {
+            letter.style.fontSize = `calc(100vw / ${word.length})`;
+        }
         secretWord.append(letter);
     });
     testing = document.querySelectorAll('span');
@@ -93,12 +99,12 @@ function checkLetter(e) {
 }
 function youWin() {
     alert('Congratulations, YOU WIN!');
-    resetBtn.disabled = false;
+    // resetBtn.disabled = false;
 }
 function youLose() {
     alert('You lose, better luck next time!');
     alert(`You're word was ${word.join('')}!`);
-    resetBtn.disabled = false;
+    // resetBtn.disabled = false;
 }
 // TODO  Make function to show word with colors different for the letters its showing you
 // TODO  Use Color Theme Inverse for loss and selected items

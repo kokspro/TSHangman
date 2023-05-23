@@ -37,7 +37,6 @@ button {
 
 span {
     margin: 0.5rem;
-    font-size: 2rem;
 }
 
 .gameButtons button{
@@ -49,13 +48,13 @@ span {
 .difficulty input {
     display: none;
       
-    &:checked+label{
+    &:checked + label{
         background: black;
         color: #1aa7fc;
         border-color: #1aa7fc;
     }
     
-    &:disabled+label {
+    &:disabled + label {
         opacity: 0.3;
     }
 }
