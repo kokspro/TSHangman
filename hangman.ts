@@ -5,31 +5,27 @@ let startBtn = document.getElementById('startBtn') as HTMLButtonElement;
 let resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
 let mode = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
 
-let lives: number;
+let lives: number = 7;
 let word: string[];
-let testing: NodeList;
+let letterPlaceholder: NodeList;
 let secretWordLength: number;
-let toComplete: number;
-let completed: number;
+let lettersLeft: number = 0;
+let lettersCorrect: number = 0;
 
 startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload() });
 
-
 async function getWord(): Promise<void> {
     if (mode[0].checked) {
-        await fetch('https://random-word-api.herokuapp.com/word')
+        await fetch('https://random-word-api.vercel.app/api?words=1')
         .then((response) => response.json())
         .then((response) => ( word = response.toString().toUpperCase().split('') ));
     } else if (mode[1].checked) {
-        await fetch('https://random-word-api.vercel.app/api?words=1')
+        await fetch('https://random-word-api.herokuapp.com/word')
         .then((response) => response.json())
         .then((response) => ( word = response.toString().toUpperCase().split('') ));
     }
 
-    lives = 7;
-    toComplete = 0;
-    completed = 0;
     secretWordLength = word.length;
     populateWord();
     populateBoard();
@@ -54,7 +50,7 @@ function populateWord(): void {
         }
         secretWord.append(letter);
     });
-    testing = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;
+    letterPlaceholder = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;
 }
 
 function populateBoard(): void {
@@ -70,19 +66,19 @@ function populateBoard(): void {
 function checkLetter(e: any): void {
     e.target.disabled = true;
     e.target.classList.add('selected');
-    completed = toComplete;
+    lettersCorrect = lettersLeft;
     let check: string = e.target.innerHTML;
     for (let i = 0; i < word.length; i++) {
         if (check === word[i]) {
-            testing[i].textContent = check; 
-            toComplete++;
-            if (toComplete === secretWordLength) {
+            letterPlaceholder[i].textContent = check; 
+            lettersLeft++;
+            if (lettersLeft === secretWordLength) {
                 guessBoard.style.display = 'none';
                 setTimeout(youWin, 500);
             }
         } 
     }
-    if (completed === toComplete) {
+    if (lettersCorrect === lettersLeft) {
         lives--;
         hangmanImage.src = `./Images/Hangman${lives}.jpg`;
         if (lives === 0) {
@@ -96,11 +92,10 @@ function youWin(): void {
 }
 
 function youLose(): void {
-    alert('You lose, better luck next time!');
     for (let i = 0; i < word.length; i++) {
-        if (testing[i].textContent === '_') {
-            testing[i].textContent = word[i];
-            let missedLetter = testing[i] as HTMLSpanElement;
+        if (letterPlaceholder[i].textContent === '_') {
+            letterPlaceholder[i].textContent = word[i];
+            let missedLetter = letterPlaceholder[i] as HTMLSpanElement;
             missedLetter.style.color = '#1aa7fc';
         }
     }

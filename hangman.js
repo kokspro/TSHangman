@@ -14,30 +14,27 @@ let guessBoard = document.getElementById('guessBoard');
 let startBtn = document.getElementById('startBtn');
 let resetBtn = document.getElementById('resetBtn');
 let mode = document.querySelectorAll('input');
-let lives;
+let lives = 7;
 let word;
-let testing;
-let completeLength;
-let toComplete;
-let completed;
+let letterPlaceholder;
+let secretWordLength;
+let lettersLeft = 0;
+let lettersCorrect = 0;
 startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload(); });
 function getWord() {
     return __awaiter(this, void 0, void 0, function* () {
         if (mode[0].checked) {
-            yield fetch('https://random-word-api.herokuapp.com/word')
-                .then((response) => response.json())
-                .then((response) => (word = response.toString().toUpperCase().split('')));
-        }
-        else if (mode[1].checked) {
             yield fetch('https://random-word-api.vercel.app/api?words=1')
                 .then((response) => response.json())
                 .then((response) => (word = response.toString().toUpperCase().split('')));
         }
-        lives = 7;
-        toComplete = 0;
-        completed = 0;
-        completeLength = word.length;
+        else if (mode[1].checked) {
+            yield fetch('https://random-word-api.herokuapp.com/word')
+                .then((response) => response.json())
+                .then((response) => (word = response.toString().toUpperCase().split('')));
+        }
+        secretWordLength = word.length;
         populateWord();
         populateBoard();
     });
@@ -61,7 +58,7 @@ function populateWord() {
         }
         secretWord.append(letter);
     });
-    testing = document.querySelectorAll('span');
+    letterPlaceholder = document.querySelectorAll('span');
 }
 function populateBoard() {
     let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -75,19 +72,19 @@ function populateBoard() {
 function checkLetter(e) {
     e.target.disabled = true;
     e.target.classList.add('selected');
-    completed = toComplete;
+    lettersCorrect = lettersLeft;
     let check = e.target.innerHTML;
     for (let i = 0; i < word.length; i++) {
         if (check === word[i]) {
-            testing[i].textContent = check;
-            toComplete++;
-            if (toComplete === completeLength) {
+            letterPlaceholder[i].textContent = check;
+            lettersLeft++;
+            if (lettersLeft === secretWordLength) {
                 guessBoard.style.display = 'none';
                 setTimeout(youWin, 500);
             }
         }
     }
-    if (completed === toComplete) {
+    if (lettersCorrect === lettersLeft) {
         lives--;
         hangmanImage.src = `./Images/Hangman${lives}.jpg`;
         if (lives === 0) {
@@ -100,14 +97,11 @@ function youWin() {
     alert('Congratulations, YOU WIN!');
 }
 function youLose() {
-    alert('You lose, better luck next time!');
     for (let i = 0; i < word.length; i++) {
-        if (testing[i].textContent === '_') {
-            testing[i].textContent = word[i];
-            let missedLetter = testing[i];
+        if (letterPlaceholder[i].textContent === '_') {
+            letterPlaceholder[i].textContent = word[i];
+            let missedLetter = letterPlaceholder[i];
             missedLetter.style.color = '#1aa7fc';
-            missedLetter.style.background = 'black';
         }
     }
 }
-// TODO  Make function to show word with colors different for the letters its showing you
