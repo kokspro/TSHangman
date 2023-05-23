@@ -73,10 +73,10 @@ function checkLetter(e) {
     e.target.disabled = true;
     e.target.classList.add('selected');
     lettersCorrect = lettersLeft;
-    let check = e.target.innerHTML;
+    let letterToCheck = e.target.innerHTML;
     for (let i = 0; i < word.length; i++) {
-        if (check === word[i]) {
-            letterPlaceholder[i].textContent = check;
+        if (letterToCheck === word[i]) {
+            letterPlaceholder[i].textContent = letterToCheck;
             lettersLeft++;
             if (lettersLeft === secretWordLength) {
                 guessBoard.style.display = 'none';
