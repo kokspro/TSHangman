@@ -47,7 +47,6 @@ function disableMode() {
         radio.disabled = true;
     });
     startBtn.disabled = true;
-    // resetBtn.disabled = true;
     getWord();
 }
 function populateWord() {
@@ -99,12 +98,16 @@ function checkLetter(e) {
 }
 function youWin() {
     alert('Congratulations, YOU WIN!');
-    // resetBtn.disabled = false;
 }
 function youLose() {
     alert('You lose, better luck next time!');
-    alert(`You're word was ${word.join('')}!`);
-    // resetBtn.disabled = false;
+    for (let i = 0; i < word.length; i++) {
+        if (testing[i].textContent === '_') {
+            testing[i].textContent = word[i];
+            let missedLetter = testing[i];
+            missedLetter.style.color = '#1aa7fc';
+            missedLetter.style.background = 'black';
+        }
+    }
 }
 // TODO  Make function to show word with colors different for the letters its showing you
-// TODO  Use Color Theme Inverse for loss and selected items

@@ -8,7 +8,7 @@ let mode = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
 let lives: number;
 let word: string[];
 let testing: NodeList;
-let completeLength: number;
+let secretWordLength: number;
 let toComplete: number;
 let completed: number;
 
@@ -30,7 +30,7 @@ async function getWord(): Promise<void> {
     lives = 7;
     toComplete = 0;
     completed = 0;
-    completeLength = word.length;
+    secretWordLength = word.length;
     populateWord();
     populateBoard();
 }
@@ -40,7 +40,6 @@ function disableMode(): void {
         radio.disabled = true;
     });
     startBtn.disabled = true;
-    // resetBtn.disabled = true;
     getWord();
 }
 
@@ -77,7 +76,7 @@ function checkLetter(e: any): void {
         if (check === word[i]) {
             testing[i].textContent = check; 
             toComplete++;
-            if (toComplete === completeLength) {
+            if (toComplete === secretWordLength) {
                 guessBoard.style.display = 'none';
                 setTimeout(youWin, 500);
             }
@@ -94,15 +93,15 @@ function checkLetter(e: any): void {
 }
 function youWin(): void {
     alert('Congratulations, YOU WIN!');
-    // resetBtn.disabled = false;
 }
 
 function youLose(): void {
     alert('You lose, better luck next time!');
-    alert(`You're word was ${word.join('')}!`);
-    // resetBtn.disabled = false;
+    for (let i = 0; i < word.length; i++) {
+        if (testing[i].textContent === '_') {
+            testing[i].textContent = word[i];
+            let missedLetter = testing[i] as HTMLSpanElement;
+            missedLetter.style.color = '#1aa7fc';
+        }
+    }
 }
-
-// TODO  Make function to show word with colors different for the letters its showing you
-// TODO  Use Color Theme Inverse for loss and selected items
-
