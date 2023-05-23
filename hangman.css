@@ -14,7 +14,7 @@ body {
 
 h1 {
   font-size: 4rem;
-  margin: 2.5rem 0 1.5rem;
+  margin: 1.5rem 0;
 }
 
 label {
@@ -55,6 +55,12 @@ span {
   opacity: 0.3;
 }
 
+.selected {
+  background: black;
+  color: #1aa7fc;
+  border-color: #1aa7fc;
+}
+
 #guessBoard {
   margin: 1rem;
 }
@@ -63,9 +69,3 @@ span {
   display: flex;
   justify-content: center;
 }
-
-.selected {
-  background: black;
-  color: #1aa7fc;
-  border-color: #1aa7fc;
-}/*# sourceMappingURL=hangman.css.map */
