@@ -51,10 +51,10 @@ function populateWord() {
         let letter = document.createElement('span');
         letter.innerHTML = '_';
         if (word.length <= 6) {
-            letter.style.fontSize = `calc((100vw / ${word.length}) / 1.5)`;
+            letter.style.fontSize = `calc((80vw / ${word.length}) / 1.9)`;
         }
         else {
-            letter.style.fontSize = `calc(100vw / ${word.length})`;
+            letter.style.fontSize = `calc(80vw / ${word.length})`;
         }
         secretWord.append(letter);
     });
