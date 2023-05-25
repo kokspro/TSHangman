@@ -66,10 +66,4 @@ span {
 #secretWord {
   display: flex;
   justify-content: center;
-}
-
-@media screen and (min-width: 900px) {
-  span {
-    font-size: 5rem;
-  }
 }/*# sourceMappingURL=hangman.css.map */
