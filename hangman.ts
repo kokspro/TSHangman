@@ -43,14 +43,17 @@ function populateWord(): void {
     word.forEach( function (e: string) {
         let letter: HTMLSpanElement = document.createElement('span');
         letter.innerHTML = '_';
-        if (word.length <= 6) {
-            letter.style.fontSize = `calc((80vw / ${word.length}) / 1.9)`;
-        } else {
-            letter.style.fontSize = `calc(80vw / ${word.length})`;
-        }
+        fontSize(letter);
+        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.5)`;
         secretWord.append(letter);
     });
     letterPlaceholder = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;
+}
+
+function fontSize(letter: HTMLSpanElement): number {
+    let size = `calc((80vw / ${word.length}) / 1.5)`;
+    if 
+    //finish calc function to set max size of hidden letters to 50px
 }
 
 function populateBoard(): void {

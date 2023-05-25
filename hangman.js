@@ -50,12 +50,7 @@ function populateWord() {
     word.forEach(function (e) {
         let letter = document.createElement('span');
         letter.innerHTML = '_';
-        if (word.length <= 6) {
-            letter.style.fontSize = `calc((80vw / ${word.length}) / 1.9)`;
-        }
-        else {
-            letter.style.fontSize = `calc(80vw / ${word.length})`;
-        }
+        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.5)`;
         secretWord.append(letter);
     });
     letterPlaceholder = document.querySelectorAll('span');
