@@ -36,6 +36,11 @@ button {
   margin: 1rem;
 }
 
+img {
+  max-width: 50%;
+  margin-top: 1rem;
+}
+
 span {
   margin: 0.5rem;
 }
