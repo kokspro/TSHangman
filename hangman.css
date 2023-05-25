@@ -42,7 +42,7 @@ img {
 }
 
 span {
-  margin: 0.5rem;
+  margin: 0 0.5rem;
 }
 
 .gameButtons button {
@@ -73,7 +73,7 @@ span {
 }
 
 #guessBoard {
-  margin: 1rem;
+  margin: 1rem 5vw;
 }
 
 #secretWord {
