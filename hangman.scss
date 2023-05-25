@@ -12,6 +12,7 @@ $backgroundColor: #555555;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-size: 62.5%;
 }
 
 body {
@@ -21,12 +22,13 @@ body {
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: 5rem;
     margin: 1.5rem 0;
 }
 
 label {
     padding: 0.5rem;
+    font-size: 2rem;
     border: 3px solid $primaryColor;
     margin: 1.8rem;
     background-color: $backgroundColor;
@@ -35,6 +37,7 @@ label {
 
 button {
     padding: 0.5rem;
+    font-size: 1.5rem;
     border: 3px solid $primaryColor;
     border-radius: 2rem;
     background: $backgroundColor;
@@ -47,7 +50,11 @@ span {
     margin: 0.5rem;
 }
 
-.gameButtons button{
+.gameButtons button {
+    font-size: 2rem;
+    width: 8rem;
+    margin-top: 2rem;
+
     &:disabled {
         opacity: 0.3;
     }
@@ -76,4 +83,10 @@ span {
 #secretWord {
     display: flex;
     justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+    button {
+        font-size: 3.5rem;
+    }
 }

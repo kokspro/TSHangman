@@ -74,7 +74,7 @@ function checkLetter(e: any): void {
             lettersLeft++;
             if (lettersLeft === secretWordLength) {
                 guessBoard.style.display = 'none';
-                setTimeout(youWin, 500);
+                break;
             }
         } 
     }
@@ -86,9 +86,6 @@ function checkLetter(e: any): void {
             setTimeout(youLose, 500);
         }
     }
-}
-function youWin(): void {
-    alert('Congratulations, YOU WIN!');
 }
 
 function youLose(): void {
