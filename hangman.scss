@@ -1,3 +1,13 @@
+$primaryColor: #E55803;
+$secondaryColor: #1aa7fc;
+$backgroundColor: #555555;
+
+@mixin inverseColor {
+    background: black;
+    color: $secondaryColor;
+    border-color: $secondaryColor;
+}
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -5,11 +15,9 @@
 }
 
 body {
-    display: grid;
-    gap: 1rem;
     text-align: center;
-    background: darken(#555555, 10%);
-    color: #E55803;
+    background: darken($backgroundColor, 10%);
+    color: $primaryColor;
 }
 
 h1 {
@@ -19,18 +27,18 @@ h1 {
 
 label {
     padding: 0.5rem;
-    border: 3px solid #E55803;
+    border: 3px solid $primaryColor;
     margin: 1.8rem;
-    background-color: #555555;
+    background-color: $backgroundColor;
     border-radius: 1rem;
 }
 
 button {
     padding: 0.5rem;
-    border: 3px solid #E55803;
+    border: 3px solid $primaryColor;
     border-radius: 2rem;
-    background: #555555;
-    color: #E55803;
+    background: $backgroundColor;
+    color: $primaryColor;
     width: 5rem;
     margin: 1rem;
 }
@@ -49,9 +57,7 @@ span {
     display: none;
       
     &:checked + label{
-        background: black;
-        color: #1aa7fc;
-        border-color: #1aa7fc;
+        @include inverseColor;
     }
     
     &:disabled + label {
@@ -60,9 +66,7 @@ span {
 }
 
 .selected {
-    background: black;
-    color: #1aa7fc;
-    border-color: #1aa7fc;
+    @include inverseColor;
 }
 
 #guessBoard {
