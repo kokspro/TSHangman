@@ -71,7 +71,7 @@ function populateWord(): void {
 
 function fontSize(letter: HTMLSpanElement): void {
     if (vars.word!.length <= 7)  //variables ?
-        letter.style.fontSize = `calc((80vw / ${vars.word!.length}) / 1.9)`;  //variables ?
+        letter.style.fontSize = `calc((80vw / ${vars.word!.length}) / 1.3)`;  //variables ?
     else 
         letter.style.fontSize = `calc((80vw / ${vars.word!.length}) / 1.1)`; // variables ?   took out / 1.5 at end
 }
