@@ -10,7 +10,7 @@
 // let secretWordLength: number; 
 // let lettersCorrect: number = 0;
 
-const dom = {
+const domElements = {
     hangmanImage: document.getElementById('hangmanImage') as HTMLImageElement,
     secretWord : document.getElementById('secretWord') as HTMLDivElement,
     guessBoard : document.getElementById('guessBoard') as HTMLDivElement,
@@ -32,24 +32,24 @@ const vars: GameVariables = {
     lettersCorrect : 0
 }
 
-dom.startBtn.addEventListener('click', disableMode);
-dom.resetBtn.addEventListener('click', () => { location.reload() });
+domElements.startBtn.addEventListener('click', disableMode);
+domElements.resetBtn.addEventListener('click', () => { location.reload() });
 
 function disableMode(): void {
-    dom.mode.forEach( function(radio: HTMLInputElement) {
+    domElements.mode.forEach( function(radio: HTMLInputElement) {
         radio.disabled = true;
     });
-    dom.startBtn.disabled = true;
+    domElements.startBtn.disabled = true;
     getWord();
 }
 
 async function getWord(): Promise<void> {
-    if (dom.mode[0].checked) {
+    if (domElements.mode[0].checked) {
         let wordLength: number = Math.floor(Math.random() * (9 - 6)) + 7;
         await fetch(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
         .then((response) => response.json())
         .then((response) => ( vars.word = response.toString().toUpperCase().split('') )); //variables
-    } else if (dom.mode[1].checked) 
+    } else if (domElements.mode[1].checked) 
         await fetch('https://random-word-api.herokuapp.com/word')
         .then((response) => response.json())
         .then((response) => ( vars.word = response.toString().toUpperCase().split('') )); //variables
@@ -64,7 +64,7 @@ function populateWord(): void {
         let letter: HTMLSpanElement = document.createElement('span');
         letter.innerHTML = '_';
         fontSize(letter);
-        dom.secretWord.append(letter);
+        domElements.secretWord.append(letter);
     });
     vars.letterPlaceHolder = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;  //variables
 }
@@ -81,7 +81,7 @@ function populateBoard(): void {
     alphabet.forEach( function (e: string) {
         let button = document.createElement('button');
         button.innerHTML = e.toUpperCase();
-        dom.guessBoard.append(button);
+        domElements.guessBoard.append(button);
         button.addEventListener('click', checkLetter);
     });
 }
@@ -101,16 +101,16 @@ function testLetter(letterToCheck: string): void {
             vars.letterPlaceHolder![i].textContent = letterToCheck; 
             vars.lettersCorrect++;
             if (vars.lettersCorrect === vars.secretWordLength)
-                dom.guessBoard.style.display = 'none';
+                domElements.guessBoard.style.display = 'none';
         } 
 }
 
 function adjustLives(currentLettersCorrect: number): void {
     if (currentLettersCorrect === vars.lettersCorrect) {
         vars.lives--;
-        dom.hangmanImage.src = `./Images/Hangman${vars.lives}.jpg`;
+        domElements.hangmanImage.src = `./Images/Hangman${vars.lives}.jpg`;
         if (vars.lives === 0) {
-            dom.guessBoard.style.display = 'none';
+            domElements.guessBoard.style.display = 'none';
             setTimeout(youLose, 500);
         }
     }
