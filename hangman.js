@@ -70,7 +70,7 @@ function fontSize(letter) {
     if (vars.word.length <= 7) //variables ?
         letter.style.fontSize = `calc((80vw / ${vars.word.length}) / 1.9)`; //variables ?
     else
-        letter.style.fontSize = `calc((80vw / ${vars.word.length}) / 1.5)`; // variables ?
+        letter.style.fontSize = `calc((80vw / ${vars.word.length}) / 1.1)`; // variables ?   took out / 1.5 at end
 }
 function populateBoard() {
     let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
