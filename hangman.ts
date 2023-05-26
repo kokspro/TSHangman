@@ -5,32 +5,14 @@ let startBtn = document.getElementById('startBtn') as HTMLButtonElement;
 let resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
 let mode = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
 
-let lives: number = 7;
+let lives: number = 7; 
 let word: string[];
-let letterPlaceholder: NodeList;
-let secretWordLength: number;
-let lettersLeft: number = 0;
-// let lettersCorrect: number = 0;
+let letterPlaceholder: NodeList; 
+let secretWordLength: number; 
+let lettersCorrect: number = 0;
 
 startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload() });
-
-async function getWord(): Promise<void> {
-    if (mode[0].checked) {
-        let wordLength: number = Math.floor(Math.random() * (9 - 6)) + 7;
-        await fetch(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
-        .then((response) => response.json())
-        .then((response) => ( word = response.toString().toUpperCase().split('') ));
-    } else if (mode[1].checked) {
-        await fetch('https://random-word-api.herokuapp.com/word')
-        .then((response) => response.json())
-        .then((response) => ( word = response.toString().toUpperCase().split('') ));
-    }
-
-    secretWordLength = word.length;
-    populateWord();
-    populateBoard();
-}
 
 function disableMode(): void {
     mode.forEach( function(radio: HTMLInputElement) {
@@ -38,6 +20,22 @@ function disableMode(): void {
     });
     startBtn.disabled = true;
     getWord();
+}
+
+async function getWord(): Promise<void> {
+    if (mode[0].checked) {
+        let wordLength: number = Math.floor(Math.random() * (9 - 6)) + 7;
+        await fetch(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
+        .then((response) => response.json())
+        .then((response) => ( word = response.toString().toUpperCase().split('') ));
+    } else if (mode[1].checked) 
+        await fetch('https://random-word-api.herokuapp.com/word')
+        .then((response) => response.json())
+        .then((response) => ( word = response.toString().toUpperCase().split('') ));
+
+    secretWordLength = word.length;
+    populateWord();
+    populateBoard();
 }
 
 function populateWord(): void { 
@@ -68,22 +66,26 @@ function populateBoard(): void {
 }
 
 function checkLetter(e: any): void {
+    let currentLettersCorrect: number = lettersCorrect;
+    let letterToCheck: string = e.target.innerHTML;
     e.target.disabled = true;
     e.target.classList.add('selected');
-    //letters correct to local
-    let lettersCorrect: number = lettersLeft;
-    let letterToCheck: string = e.target.innerHTML;
-    for (let i = 0; i < word.length; i++) {
+    testLetter(letterToCheck);
+    adjustLives(currentLettersCorrect);
+}
+
+function testLetter(letterToCheck: string): void {
+    for (let i = 0; i < word.length; i++)
         if (letterToCheck === word[i]) {
             letterPlaceholder[i].textContent = letterToCheck; 
-            lettersLeft++;
-            if (lettersLeft === secretWordLength) {
+            lettersCorrect++;
+            if (lettersCorrect === secretWordLength)
                 guessBoard.style.display = 'none';
-                break;
-            }
         } 
-    }
-    if (lettersCorrect === lettersLeft) {
+}
+
+function adjustLives(currentLettersCorrect: number): void {
+    if (currentLettersCorrect === lettersCorrect) {
         lives--;
         hangmanImage.src = `./Images/Hangman${lives}.jpg`;
         if (lives === 0) {
@@ -94,11 +96,10 @@ function checkLetter(e: any): void {
 }
 
 function youLose(): void {
-    for (let i = 0; i < word.length; i++) {
+    for (let i = 0; i < word.length; i++)
         if (letterPlaceholder[i].textContent === '_') {
             letterPlaceholder[i].textContent = word[i];
             let missedLetter = letterPlaceholder[i] as HTMLSpanElement;
             missedLetter.style.color = '#1aa7fc';
         }
-    }
 }

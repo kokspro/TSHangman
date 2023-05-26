@@ -18,10 +18,16 @@ let lives = 7;
 let word;
 let letterPlaceholder;
 let secretWordLength;
-let lettersLeft = 0;
-// let lettersCorrect: number = 0;
+let lettersCorrect = 0;
 startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload(); });
+function disableMode() {
+    mode.forEach(function (radio) {
+        radio.disabled = true;
+    });
+    startBtn.disabled = true;
+    getWord();
+}
 function getWord() {
     return __awaiter(this, void 0, void 0, function* () {
         if (mode[0].checked) {
@@ -30,22 +36,14 @@ function getWord() {
                 .then((response) => response.json())
                 .then((response) => (word = response.toString().toUpperCase().split('')));
         }
-        else if (mode[1].checked) {
+        else if (mode[1].checked)
             yield fetch('https://random-word-api.herokuapp.com/word')
                 .then((response) => response.json())
                 .then((response) => (word = response.toString().toUpperCase().split('')));
-        }
         secretWordLength = word.length;
         populateWord();
         populateBoard();
     });
-}
-function disableMode() {
-    mode.forEach(function (radio) {
-        radio.disabled = true;
-    });
-    startBtn.disabled = true;
-    getWord();
 }
 function populateWord() {
     word.forEach(function (e) {
@@ -72,22 +70,24 @@ function populateBoard() {
     });
 }
 function checkLetter(e) {
+    let currentLettersCorrect = lettersCorrect;
+    let letterToCheck = e.target.innerHTML;
     e.target.disabled = true;
     e.target.classList.add('selected');
-    //letters correct to local
-    let lettersCorrect = lettersLeft;
-    let letterToCheck = e.target.innerHTML;
-    for (let i = 0; i < word.length; i++) {
+    testLetter(letterToCheck);
+    adjustLives(currentLettersCorrect);
+}
+function testLetter(letterToCheck) {
+    for (let i = 0; i < word.length; i++)
         if (letterToCheck === word[i]) {
             letterPlaceholder[i].textContent = letterToCheck;
-            lettersLeft++;
-            if (lettersLeft === secretWordLength) {
+            lettersCorrect++;
+            if (lettersCorrect === secretWordLength)
                 guessBoard.style.display = 'none';
-                break;
-            }
         }
-    }
-    if (lettersCorrect === lettersLeft) {
+}
+function adjustLives(currentLettersCorrect) {
+    if (currentLettersCorrect === lettersCorrect) {
         lives--;
         hangmanImage.src = `./Images/Hangman${lives}.jpg`;
         if (lives === 0) {
@@ -97,11 +97,10 @@ function checkLetter(e) {
     }
 }
 function youLose() {
-    for (let i = 0; i < word.length; i++) {
+    for (let i = 0; i < word.length; i++)
         if (letterPlaceholder[i].textContent === '_') {
             letterPlaceholder[i].textContent = word[i];
             let missedLetter = letterPlaceholder[i];
             missedLetter.style.color = '#1aa7fc';
         }
-    }
 }
