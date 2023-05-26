@@ -10,14 +10,15 @@ let word: string[];
 let letterPlaceholder: NodeList;
 let secretWordLength: number;
 let lettersLeft: number = 0;
-let lettersCorrect: number = 0;
+// let lettersCorrect: number = 0;
 
 startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload() });
 
 async function getWord(): Promise<void> {
     if (mode[0].checked) {
-        await fetch('https://random-word-api.vercel.app/api?words=1')
+        let wordLength: number = Math.floor(Math.random() * (9 - 6)) + 7;
+        await fetch(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
         .then((response) => response.json())
         .then((response) => ( word = response.toString().toUpperCase().split('') ));
     } else if (mode[1].checked) {
@@ -44,16 +45,16 @@ function populateWord(): void {
         let letter: HTMLSpanElement = document.createElement('span');
         letter.innerHTML = '_';
         fontSize(letter);
-        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.5)`;
         secretWord.append(letter);
     });
     letterPlaceholder = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;
 }
 
-function fontSize(letter: HTMLSpanElement): number {
-    let size = `calc((80vw / ${word.length}) / 1.5)`;
-    if 
-    //finish calc function to set max size of hidden letters to 50px
+function fontSize(letter: HTMLSpanElement): void {
+    if (word.length <= 7)
+        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.9)`;
+    else 
+        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.5)`;
 }
 
 function populateBoard(): void {
@@ -69,7 +70,8 @@ function populateBoard(): void {
 function checkLetter(e: any): void {
     e.target.disabled = true;
     e.target.classList.add('selected');
-    lettersCorrect = lettersLeft;
+    //letters correct to local
+    let lettersCorrect: number = lettersLeft;
     let letterToCheck: string = e.target.innerHTML;
     for (let i = 0; i < word.length; i++) {
         if (letterToCheck === word[i]) {

@@ -19,13 +19,14 @@ let word;
 let letterPlaceholder;
 let secretWordLength;
 let lettersLeft = 0;
-let lettersCorrect = 0;
+// let lettersCorrect: number = 0;
 startBtn.addEventListener('click', disableMode);
 resetBtn.addEventListener('click', () => { location.reload(); });
 function getWord() {
     return __awaiter(this, void 0, void 0, function* () {
         if (mode[0].checked) {
-            yield fetch('https://random-word-api.vercel.app/api?words=1')
+            let wordLength = Math.floor(Math.random() * (9 - 6)) + 7;
+            yield fetch(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
                 .then((response) => response.json())
                 .then((response) => (word = response.toString().toUpperCase().split('')));
         }
@@ -50,10 +51,16 @@ function populateWord() {
     word.forEach(function (e) {
         let letter = document.createElement('span');
         letter.innerHTML = '_';
-        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.5)`;
+        fontSize(letter);
         secretWord.append(letter);
     });
     letterPlaceholder = document.querySelectorAll('span');
+}
+function fontSize(letter) {
+    if (word.length <= 7)
+        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.9)`;
+    else
+        letter.style.fontSize = `calc((80vw / ${word.length}) / 1.5)`;
 }
 function populateBoard() {
     let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -67,7 +74,8 @@ function populateBoard() {
 function checkLetter(e) {
     e.target.disabled = true;
     e.target.classList.add('selected');
-    lettersCorrect = lettersLeft;
+    //letters correct to local
+    let lettersCorrect = lettersLeft;
     let letterToCheck = e.target.innerHTML;
     for (let i = 0; i < word.length; i++) {
         if (letterToCheck === word[i]) {
