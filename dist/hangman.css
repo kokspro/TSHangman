@@ -2,23 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-size: 62.5%;
 }
 
 body {
-  display: grid;
-  gap: 1rem;
   text-align: center;
   background: #3c3c3c;
   color: #E55803;
 }
 
 h1 {
-  font-size: 4rem;
+  font-size: 5rem;
   margin: 1.5rem 0;
 }
 
 label {
   padding: 0.5rem;
+  font-size: 2rem;
   border: 3px solid #E55803;
   margin: 1.8rem;
   background-color: #555555;
@@ -27,6 +27,7 @@ label {
 
 button {
   padding: 0.5rem;
+  font-size: 1.5rem;
   border: 3px solid #E55803;
   border-radius: 2rem;
   background: #555555;
@@ -35,10 +36,20 @@ button {
   margin: 1rem;
 }
 
-span {
-  margin: 0.5rem;
+img {
+  max-height: 60vw;
+  margin-top: 1rem;
 }
 
+span {
+  margin: 0 0.5rem;
+}
+
+.gameButtons button {
+  font-size: 2rem;
+  width: 8rem;
+  margin-top: 2rem;
+}
 .gameButtons button:disabled {
   opacity: 0.3;
 }
@@ -62,10 +73,19 @@ span {
 }
 
 #guessBoard {
-  margin: 1rem;
+  margin: 1rem 5vw;
 }
 
 #secretWord {
   display: flex;
   justify-content: center;
+}
+
+@media screen and (min-width: 768px) {
+  button {
+    font-size: 3.5rem;
+  }
+  img {
+    max-height: 75vw;
+  }
 }
