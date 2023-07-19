@@ -1,15 +1,3 @@
-// let hangmanImage = document.getElementById('hangmanImage') as HTMLImageElement;
-// let secretWord = document.getElementById('secretWord') as HTMLDivElement;
-// let guessBoard = document.getElementById('guessBoard') as HTMLDivElement;
-// let startBtn = document.getElementById('startBtn') as HTMLButtonElement;
-// let resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
-// let mode = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
-// let lives: number = 7; 
-// let word: string[];
-// let letterPlaceholder: NodeList; 
-// let secretWordLength: number; 
-// let lettersCorrect: number = 0;
-
 const domElements = {
     hangmanImage: document.getElementById('hangmanImage') as HTMLImageElement,
     secretWord : document.getElementById('secretWord') as HTMLDivElement,
@@ -124,3 +112,5 @@ function youLose(): void {
             missedLetter.style.color = '#1aa7fc';
         }
 }
+
+
