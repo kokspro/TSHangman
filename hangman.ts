@@ -36,32 +36,32 @@ async function getWord(): Promise<void> {
         let wordLength: number = Math.floor(Math.random() * (9 - 6)) + 7;
         await fetch(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
         .then((response) => response.json())
-        .then((response) => ( vars.word = response.toString().toUpperCase().split('') )); //variables
+        .then((response) => ( vars.word = response.toString().toUpperCase().split('') ));
     } else if (domElements.mode[1].checked) 
         await fetch('https://random-word-api.herokuapp.com/word')
         .then((response) => response.json())
-        .then((response) => ( vars.word = response.toString().toUpperCase().split('') )); //variables
+        .then((response) => ( vars.word = response.toString().toUpperCase().split('') )); 
 
-    vars.secretWordLength = vars.word!.length;  //variables 2 ? 1
+    vars.secretWordLength = vars.word!.length;  
     populateWord();
     populateBoard();
 }
 
 function populateWord(): void { 
-    vars.word!.forEach( function (e: string) {  //variables ?
+    vars.word!.forEach( function () {
         let letter: HTMLSpanElement = document.createElement('span');
         letter.innerHTML = '_';
         fontSize(letter);
         domElements.secretWord.append(letter);
     });
-    vars.letterPlaceHolder = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;  //variables
+    vars.letterPlaceHolder = document.querySelectorAll('span') as NodeListOf<HTMLSpanElement>;  
 }
 
 function fontSize(letter: HTMLSpanElement): void {
-    if (vars.word!.length <= 7)  //variables ?
-        letter.style.fontSize = `calc((80vw / ${vars.word!.length}) / 1.3)`;  //variables ?
+    if (vars.word!.length <= 7)  
+        letter.style.fontSize = `calc((80vw / ${vars.word!.length}) / 1.3)`;  
     else 
-        letter.style.fontSize = `calc((80vw / ${vars.word!.length}) / 1.1)`; // variables ?   took out / 1.5 at end
+        letter.style.fontSize = `calc((80vw / ${vars.word!.length}) / 1.1)`;
 }
 
 function populateBoard(): void {
@@ -75,7 +75,7 @@ function populateBoard(): void {
 }
 
 function checkLetter(e: any): void {
-    let currentLettersCorrect: number = vars.lettersCorrect;  //variables
+    let currentLettersCorrect: number = vars.lettersCorrect;  
     let letterToCheck: string = e.target.innerHTML;
     e.target.disabled = true;
     e.target.classList.add('selected');
@@ -84,7 +84,7 @@ function checkLetter(e: any): void {
 }
 
 function testLetter(letterToCheck: string): void {
-    for (let i = 0; i < vars.word!.length; i++)  //variables !
+    for (let i = 0; i < vars.word!.length; i++) 
         if (letterToCheck === vars.word![i]) {
             vars.letterPlaceHolder![i].textContent = letterToCheck; 
             vars.lettersCorrect++;

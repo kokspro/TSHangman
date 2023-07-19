@@ -1,15 +1,4 @@
 "use strict";
-// let hangmanImage = document.getElementById('hangmanImage') as HTMLImageElement;
-// let secretWord = document.getElementById('secretWord') as HTMLDivElement;
-// let guessBoard = document.getElementById('guessBoard') as HTMLDivElement;
-// let startBtn = document.getElementById('startBtn') as HTMLButtonElement;
-// let resetBtn = document.getElementById('resetBtn') as HTMLButtonElement;
-// let mode = document.querySelectorAll('input') as NodeListOf<HTMLInputElement>;
-// let lives: number = 7; 
-// let word: string[];
-// let letterPlaceholder: NodeList; 
-// let secretWordLength: number; 
-// let lettersCorrect: number = 0;
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -46,31 +35,31 @@ function getWord() {
             let wordLength = Math.floor(Math.random() * (9 - 6)) + 7;
             yield fetch(`https://random-word-api.vercel.app/api?words=1&length=${wordLength}`)
                 .then((response) => response.json())
-                .then((response) => (vars.word = response.toString().toUpperCase().split(''))); //variables
+                .then((response) => (vars.word = response.toString().toUpperCase().split('')));
         }
         else if (domElements.mode[1].checked)
             yield fetch('https://random-word-api.herokuapp.com/word')
                 .then((response) => response.json())
-                .then((response) => (vars.word = response.toString().toUpperCase().split(''))); //variables
-        vars.secretWordLength = vars.word.length; //variables 2 ? 1
+                .then((response) => (vars.word = response.toString().toUpperCase().split('')));
+        vars.secretWordLength = vars.word.length;
         populateWord();
         populateBoard();
     });
 }
 function populateWord() {
-    vars.word.forEach(function (e) {
+    vars.word.forEach(function () {
         let letter = document.createElement('span');
         letter.innerHTML = '_';
         fontSize(letter);
         domElements.secretWord.append(letter);
     });
-    vars.letterPlaceHolder = document.querySelectorAll('span'); //variables
+    vars.letterPlaceHolder = document.querySelectorAll('span');
 }
 function fontSize(letter) {
-    if (vars.word.length <= 7) //variables ?
-        letter.style.fontSize = `calc((80vw / ${vars.word.length}) / 1.3)`; //variables ?
+    if (vars.word.length <= 7)
+        letter.style.fontSize = `calc((80vw / ${vars.word.length}) / 1.3)`;
     else
-        letter.style.fontSize = `calc((80vw / ${vars.word.length}) / 1.1)`; // variables ?   took out / 1.5 at end
+        letter.style.fontSize = `calc((80vw / ${vars.word.length}) / 1.1)`;
 }
 function populateBoard() {
     let alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
@@ -82,7 +71,7 @@ function populateBoard() {
     });
 }
 function checkLetter(e) {
-    let currentLettersCorrect = vars.lettersCorrect; //variables
+    let currentLettersCorrect = vars.lettersCorrect;
     let letterToCheck = e.target.innerHTML;
     e.target.disabled = true;
     e.target.classList.add('selected');
@@ -90,7 +79,7 @@ function checkLetter(e) {
     adjustLives(currentLettersCorrect);
 }
 function testLetter(letterToCheck) {
-    for (let i = 0; i < vars.word.length; i++) //variables !
+    for (let i = 0; i < vars.word.length; i++)
         if (letterToCheck === vars.word[i]) {
             vars.letterPlaceHolder[i].textContent = letterToCheck;
             vars.lettersCorrect++;
